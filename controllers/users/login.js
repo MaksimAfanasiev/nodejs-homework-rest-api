@@ -2,8 +2,11 @@ const { User, schemas } = require("../../models/users");
 const { RequestError } = require("../../helpers");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const dotenv = require("dotenv");
 
-const SECRET_KEY = "1sa3fdj63op99";
+dotenv.config();
+
+const SECRET_KEY = process.env.SECRET_KEY;
 
 const login = async (req, res, next) => {
   try {
