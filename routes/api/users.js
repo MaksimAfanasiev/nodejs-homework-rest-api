@@ -4,6 +4,8 @@ const upload = require("../../middlewares/upload");
 
 const {
   register,
+  verify,
+  resendVerify,
   login,
   logout,
   getCurrent,
@@ -14,6 +16,10 @@ const {
 const authenticate = require("../../middlewares/authenticate");
 
 router.post("/register", register);
+
+router.get("/verify/:verificationToken", verify);
+
+router.post("/verify", resendVerify);
 
 router.post("/login", login);
 

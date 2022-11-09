@@ -2,8 +2,11 @@ const { User, schemas } = require("../../models/users");
 const { RequestError } = require("../../helpers");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const dotenv = require("dotenv");
 
-const SECRET_KEY = "1sa3fdj63op99";
+dotenv.config();
+
+const SECRET_KEY = process.env.SECRET_KEY;
 
 const login = async (req, res, next) => {
   try {
@@ -22,6 +25,10 @@ const login = async (req, res, next) => {
     const passwordIsValid = await bcrypt.compare(password, user.password);
     if (!passwordIsValid) {
       throw RequestError(401, "Email or password is wrong");
+    }
+
+    if (!user.verify) {
+      throw RequestError(403, "Not verified");
     }
 
     const payload = {
